@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { formatEventDate } from '$lib/event-date';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -15,7 +16,7 @@
 		<div>
 			<h2 class="text-lg font-bold"><a href="/{event.id}">{event.id}: {event.title}</a></h2>
 			<p>{event.description}</p>
-			<p>{event.date}</p>
+			<p>{formatEventDate(event.date)}</p>
 		</div>
 	{/each}
 {:catch}
