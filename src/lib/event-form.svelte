@@ -27,33 +27,57 @@
 	};
 </script>
 
-<form method="POST" use:enhance={handleSubmit}>
+<form method="POST" use:enhance={handleSubmit} class="flex flex-col gap-4">
 	<!-- form for creating or editing an event -->
-	<label for="title">Title</label>
-	<input type="text" id="title" name="title" value={event?.title} required />
-	<textarea
-		id="description"
-		name="description"
-		rows="4"
-		cols="50"
-		placeholder="Description"
-		value={event?.description}
-	></textarea>
-	<label for="date">Date</label>
-	<input
-		type="datetime-local"
-		id="date"
-		name="date"
-		value={event ? toDateInput(event.date) : undefined}
-		required
-	/>
+	<div class="form-control">
+		<label class="label" for="title">
+			<span class="label-text">Title</span>
+		</label>
+		<input
+			type="text"
+			id="title"
+			name="title"
+			class="input input-bordered"
+			value={event?.title}
+			required
+		/>
+	</div>
+	<div class="form-control">
+		<label class="label" for="description">
+			<span class="label-text">Description</span>
+		</label>
+		<textarea
+			id="description"
+			name="description"
+			rows="4"
+			class="textarea textarea-bordered"
+			placeholder="Optional"
+			value={event?.description}
+		></textarea>
+	</div>
+	<div class="form-control">
+		<label class="label" for="date">
+			<span class="label-text">Date</span>
+		</label>
+		<input
+			type="datetime-local"
+			id="date"
+			name="date"
+			class="input input-bordered"
+			value={event ? toDateInput(event.date) : undefined}
+			required
+		/>
+	</div>
 	{#if dateInPast}
-		<p>Date must be in the future</p>
+		<div class="alert alert-error">Date must be in the future</div>
 	{/if}
-	<button type="submit" class="btn" disabled={submitting}>
-		{event ? 'Save Changes' : 'Create Event'}
-	</button>
-	{#if submitting}
-		<p>{event ? 'Saving event...' : 'Creating event...'}</p>
-	{/if}
+	<div class="flex items-center gap-3">
+		<button type="submit" class="btn btn-primary" disabled={submitting}>
+			{event ? 'Save Changes' : 'Create Event'}
+		</button>
+		{#if submitting}
+			<span class="loading loading-spinner"></span>
+			<span>{event ? 'Saving event...' : 'Creating event...'}</span>
+		{/if}
+	</div>
 </form>

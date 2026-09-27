@@ -6,6 +6,7 @@
 </script>
 
 {#if data.event}
+	<h1 class="mb-6 text-3xl font-bold">Edit Event</h1>
 	<EventForm event={data.event} />
-	<a href="/{data.event.id}">Cancel Edit</a>
+	<a class="link link-hover mt-6 inline-block" href="/{data.event.id}">Cancel Edit</a>
 {/if}
