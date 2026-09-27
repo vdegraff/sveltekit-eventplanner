@@ -1,14 +1,30 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { parseEventDate, toDateInput, toStoredDate } from '$lib/event-date';
 	import type { Event } from '$lib/server/remote-events';
 
 	let { event }: { event?: Event } = $props();
 
 	let submitting = $state(false);
+	let dateInPast = $state(false);
 
-	function handleSubmit() {
+	const handleSubmit: SubmitFunction = ({ formData, cancel }) => {
+		const selected = new Date(formData.get('date')?.toString() ?? '');
+		if (Number.isNaN(selected.getTime())) {
+			submitting = true;
+			return;
+		}
+		const unchanged = event ? selected.getTime() === parseEventDate(event.date).getTime() : false;
+		if (!unchanged && selected < new Date()) {
+			dateInPast = true;
+			cancel();
+			return;
+		}
+		dateInPast = false;
+		formData.set('date', toStoredDate(selected));
 		submitting = true;
-	}
+	};
 </script>
 
 <form method="POST" use:enhance={handleSubmit}>
@@ -24,7 +40,16 @@
 		value={event?.description}
 	></textarea>
 	<label for="date">Date</label>
-	<input type="datetime-local" id="date" name="date" value={event?.date} required />
+	<input
+		type="datetime-local"
+		id="date"
+		name="date"
+		value={event ? toDateInput(event.date) : undefined}
+		required
+	/>
+	{#if dateInPast}
+		<p>Date must be in the future</p>
+	{/if}
 	<button type="submit" class="btn" disabled={submitting}>
 		{event ? 'Save Changes' : 'Create Event'}
 	</button>

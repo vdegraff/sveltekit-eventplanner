@@ -12,8 +12,9 @@ export const load: PageServerLoad = async ({ params }) => {
 
 export const actions: Actions = {
 	default: async ({ params, request }) => {
-		const eventFields = parseEventForm(await request.formData());
 		const eventId = parseInt(params.eventId);
+		const existing = await fetchEventById(eventId);
+		const eventFields = parseEventForm(await request.formData(), existing?.date);
 		await updateEventById(eventId, eventFields);
 		redirect(303, `/${eventId}`);
 	}

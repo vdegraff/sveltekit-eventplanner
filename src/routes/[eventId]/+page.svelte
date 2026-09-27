@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { formatEventDate } from '$lib/event-date';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -33,7 +34,7 @@
 		{#if event}
 			<h2 class="text-lg font-bold">{event.id}: {event.title}</h2>
 			<p>{event.description}</p>
-			<p>{event.date}</p>
+			<p>{formatEventDate(event.date)}</p>
 			<a href="/editevent/{event.id}" onclick={openEditor}>Edit Event</a>
 			{#if loadingEditor}
 				<p>Loading editor...</p>
