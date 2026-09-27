@@ -2,3 +2,11 @@
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+# Readonly Assignment Files
+/README.md
+src/lib/server/remote-events.ts
+src/lib/server/storage.ts
+/data/
+
+.vscode/extensions.json
