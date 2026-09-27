@@ -1,17 +1,12 @@
+import { parseEventForm } from '$lib/server/event-form';
 import { createEvent } from '$lib/server/remote-events';
 import type { Actions } from './$types';
-import { error, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
 	default: async ({ request }) => {
-		const formdata = await request.formData();
-		const title = formdata.get('title')?.toString();
-		const description = formdata.get('description')?.toString();
-		const date = formdata.get('date')?.toString();
-		if (!title || !date) {
-			error(400, 'Title and Date are required');
-		}
-		const newEvent = await createEvent({ title, description, date });
+		const eventFields = parseEventForm(await request.formData());
+		const newEvent = await createEvent(eventFields);
 		redirect(303, `/${newEvent.id}`);
 	}
 };

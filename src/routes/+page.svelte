@@ -13,7 +13,7 @@
 {:then events}
 	{#each events as event}
 		<div>
-			<h2 class="text-lg font-bold">{event.id}: {event.title}</h2>
+			<h2 class="text-lg font-bold"><a href="/{event.id}">{event.id}: {event.title}</a></h2>
 			<p>{event.description}</p>
 			<p>{event.date}</p>
 		</div>
