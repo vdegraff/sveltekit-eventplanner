@@ -2,7 +2,7 @@ import { isHttpError } from '@sveltejs/kit';
 import { describe, expect, it } from 'vitest';
 import { parseEventForm } from './event-form';
 
-const future = '2027-06-07T10:00:00Z';
+const future = '2099-06-07T10:00:00Z';
 const past = '2020-06-07T10:00:00Z';
 
 function buildFormData(fields: Record<string, string>) {
@@ -44,7 +44,7 @@ describe('event form', () => {
 	});
 
 	it('reject date without timezone', () => {
-		expect(rejectionMessage({ title: 'vitest', date: '2027-06-07T10:00:00' })).toBe(
+		expect(rejectionMessage({ title: 'vitest', date: '2099-06-07T10:00:00' })).toBe(
 			'Date must be a valid UTC date and time'
 		);
 	});

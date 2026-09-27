@@ -10,7 +10,7 @@ vi.mock('$lib/server/remote-events', () => ({
 const eventFields = {
 	title: 'vitest',
 	description: 'test description',
-	date: '2027-06-07T10:00:00Z'
+	date: '2099-06-07T10:00:00Z'
 };
 
 function submit(fields: Record<string, string>) {
