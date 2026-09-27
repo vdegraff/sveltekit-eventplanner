@@ -3,3 +3,4 @@
 </script>
 
 <EventForm />
+<a href="/">Cancel</a>
